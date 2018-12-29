@@ -13,8 +13,10 @@ export const secondElapsed = () => ({
 // SELECTORS
 export const getTime = state => time(state.time.hours, state.time.minutes, state.time.seconds);
 
+const startDate = new Date();
+
 const defaultState = {
-  time: time(0, 0, 0),
+  time: time(startDate.getHours(), startDate.getMinutes(), startDate.getSeconds()),
 }
 
 // REDUCERS
