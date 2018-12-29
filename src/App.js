@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
 import './App.css';
 import Clock from './Clock.js'
+import { getElapsedSeconds } from './reducers'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Clock hours="12" minutes="1" seconds="0"/>  
+        <Clock seconds={this.props.seconds} />
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  console.log("app", JSON.stringify(state));
+  return {
+    seconds: getElapsedSeconds(state),
+  };
+};
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

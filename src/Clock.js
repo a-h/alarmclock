@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Clock = ({ hours, minutes, seconds }) => (
-  <div>{hours}:{minutes}:{seconds}</div>
+const Clock = ({ seconds }) => (
+  <div>{seconds}</div>
 );
 
 export default Clock;
