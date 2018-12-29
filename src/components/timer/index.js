@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { secondElapsed} from '../../reducers/modules/timer';
+import { secondElapsed} from '../../reducers/modules/time';
 
 class Timer extends Component {
   render() {

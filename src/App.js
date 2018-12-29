@@ -2,22 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 import Clock from './Clock.js'
-import { getElapsedSeconds } from './reducers'
+import { getTime } from './reducers'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Clock seconds={this.props.seconds} />
+        <Clock hours={this.props.time.hours} minutes={this.props.time.minutes} seconds={this.props.time.seconds} />
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  console.log("app", JSON.stringify(state));
   return {
-    seconds: getElapsedSeconds(state),
+    time: getTime(state),
   };
 };
 

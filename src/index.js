@@ -8,7 +8,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Timer from './components/timer';
 import { Provider } from 'react-redux';
- import rootReducer from './reducers'
+import rootReducer from './reducers'
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 

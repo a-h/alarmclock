@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
+import { time, addSecondTo } from '../../../time';
 
 // ACTIONS
 export const SECOND_ELAPSED = 'TIMER/SECOND_ELAPSED';
@@ -10,20 +11,19 @@ export const secondElapsed = () => ({
 });
 
 // SELECTORS
-export const getElapsedSeconds = state => state.seconds;
+export const getTime = state => time(state.time.hours, state.time.minutes, state.time.seconds);
 
 const defaultState = {
-  seconds: 0,
+  time: time(0, 0, 0),
 }
 
 // REDUCERS
-const elapsed = handleActions({
+const timeReducers = handleActions({
   [SECOND_ELAPSED]: (state) => {
-    console.log(JSON.stringify(state));
-    return Object.assign({}, state, { seconds: getElapsedSeconds(state) + 1 });
+    return Object.assign({}, state, { time: addSecondTo(getTime(state)) });
   },
 }, defaultState);
 
 export default combineReducers({
-  elapsed,
+  time: timeReducers,
 });
