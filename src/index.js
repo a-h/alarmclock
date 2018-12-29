@@ -9,12 +9,14 @@ import * as serviceWorker from './serviceWorker';
 import Timer from './components/timer';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers'
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
-    <Timer/>
+    <CssBaseline />
+    <Timer />
     <App />
   </Provider>,
   document.getElementById('root')
