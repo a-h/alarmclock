@@ -35,12 +35,26 @@ export const incrementMinute = ({ hours, minutes, seconds }) => {
   if(minutes < 59) {
     return time(hours, minutes + 1, seconds);
   }
-  return time(hours, 0, seconds)
+  return time(hours, 0, seconds);
 };
 
 export const decrementMinute = ({ hours, minutes, seconds }) => {
   if(minutes > 0) {
     return time(hours, minutes - 1, seconds);
   }
-  return time(hours, 59, seconds)
+  return time(hours, 59, seconds);
+};
+
+export const incrementSecond = ({ hours, minutes, seconds }) => {
+  if(seconds < 59){
+    return time(hours, minutes, seconds + 1);
+  }
+  return time(hours, minutes, 0);
+};
+
+export const decrementSecond = ({ hours, minutes, seconds }) => {
+  if(seconds <= 0){
+    return time(hours, minutes, 59);
+  }
+  return time(hours, minutes, seconds - 1);
 };

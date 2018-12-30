@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
-import { time, addSecond, incrementHour, decrementHour, incrementMinute, decrementMinute } from '../../../time';
+import { time, addSecond, incrementHour, decrementHour, incrementMinute, decrementMinute, incrementSecond, decrementSecond } from '../../../time';
 
 // ACTIONS
 export const SECOND_ELAPSED = 'TIMER/SECOND_ELAPSED';
@@ -8,6 +8,8 @@ export const HOUR_INCREMENT = 'TIMER/HOUR_INCREMENT';
 export const HOUR_DECREMENT = 'TIMER/HOUR_DECREMENT';
 export const MINUTE_INCREMENT = 'TIMER/MINUTE_INCREMENT';
 export const MINUTE_DECREMENT = 'TIMER/MINUTE_DECREMENT';
+export const SECOND_INCREMENT = 'TIMER/SECOND_INCREMENT';
+export const SECOND_DECREMENT = 'TIMER/SECOND_DECREMENT';
 
 // ACTION CREATORS
 export const secondElapsed = () => ({
@@ -28,6 +30,14 @@ export const minuteIncrement = () => ({
 
 export const minuteDecrement = () => ({
   type: MINUTE_DECREMENT
+});
+
+export const secondIncrement = () => ({
+  type: SECOND_INCREMENT
+});
+
+export const secondDecrement = () => ({
+  type: SECOND_DECREMENT
 });
 
 // SELECTORS
@@ -55,6 +65,12 @@ const timeReducers = handleActions({
   },
   [MINUTE_DECREMENT]: (state) => {
     return Object.assign({}, state, { time: decrementMinute(getTime(state))});
+  },
+  [SECOND_INCREMENT]: (state) => {
+    return Object.assign({}, state, { time: incrementSecond(getTime(state))});
+  },
+  [SECOND_DECREMENT]: (state) => {
+    return Object.assign({}, state, { time: decrementSecond(getTime(state))});
   },
 }, defaultState);
 
