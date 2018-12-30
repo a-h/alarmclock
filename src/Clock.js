@@ -5,42 +5,48 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { ArrowDropUp, ArrowDropDown } from '@material-ui/icons';
 import { connect } from 'react-redux';
-import { hourIncrement, hourDecrement } from './reducers/modules/time'
+import { hourIncrement, hourDecrement, minuteIncrement, minuteDecrement } from './reducers/modules/time'
 import PropTypes from 'prop-types';
 
-const UpArrowButton = ({ incrementHour }) => (
-    <IconButton onClick={incrementHour}>
-      <ArrowDropUp />
-    </IconButton>
+const UpArrowButton = ({ onClick }) => (
+  <IconButton onClick={onClick}>
+    <ArrowDropUp />
+  </IconButton>
 );
 
-const DownArrowButton = ({ decrementHour }) => (
-  <IconButton onClick={decrementHour}>
+const DownArrowButton = ({ onClick }) => (
+  <IconButton onClick={onClick}>
     <ArrowDropDown />
   </IconButton>
 );
 
 const twoDigits = (v) => v >= 10 ? v.toString() : '0' + v.toString();
 
-const Clock = ({ hours, minutes, seconds, incrementHour, decrementHour }) => (
+const Clock = ({ hours, minutes, seconds, 
+  incrementHour, decrementHour,
+  incrementMinute, decrementMinute }) => (
   <Paper style={{ padding: '10px' }}>
     <Grid container spacing={16} justify="center" alignItems="center" direction="row">
       <Grid item>
         <Grid container spacing={16} justify="center" alignItems="center" direction="column">
-          <UpArrowButton incrementHour={incrementHour} />
+          <UpArrowButton onClick={incrementHour} />
           <Typography variant="h3" component="h3">
             {twoDigits(hours)}
           </Typography>
-          <DownArrowButton decrementHour={decrementHour} />
+          <DownArrowButton onClick={decrementHour} />
         </Grid>
       </Grid>
       <Grid item>
         <Typography variant="h3" component="h3">:</Typography>
       </Grid>
       <Grid item>
-        <Typography variant="h3" component="h3">
-          {twoDigits(minutes)}
-        </Typography>
+        <Grid container spacing={16} justify="center" alignItems="center" direction="column">
+          <UpArrowButton onClick={incrementMinute} />
+          <Typography variant="h3" component="h3">
+            {twoDigits(minutes)}
+          </Typography>
+          <DownArrowButton onClick={decrementMinute} />
+        </Grid>      
       </Grid>
       <Grid item>
         <Typography variant="h3" component="h3">:</Typography>
@@ -51,12 +57,14 @@ const Clock = ({ hours, minutes, seconds, incrementHour, decrementHour }) => (
         </Typography>
       </Grid>
     </Grid>
-  </Paper>
+  </Paper >
 );
 
 Clock.propTypes = {
   incrementHour: PropTypes.func,
   decrementHour: PropTypes.func,
+  incrementMinute: PropTypes.func,
+  decrementMinute: PropTypes.func,
 };
 
 const mapStateToProps = state => {
@@ -66,6 +74,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   incrementHour: hourIncrement,
   decrementHour: hourDecrement,
+  incrementMinute: minuteIncrement,
+  decrementMinute: minuteDecrement,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clock);
