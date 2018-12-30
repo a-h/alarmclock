@@ -8,14 +8,14 @@ import { connect } from 'react-redux';
 import { hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement } from './reducers/modules/time'
 import PropTypes from 'prop-types';
 
-const UpArrowButton = ({ onClick }) => (
-  <IconButton onClick={onClick}>
+const UpArrowButton = ({ onClick, disabled }) => (
+  <IconButton onClick={onClick} disabled={disabled}>
     <ArrowDropUp />
   </IconButton>
 );
 
-const DownArrowButton = ({ onClick }) => (
-  <IconButton onClick={onClick}>
+const DownArrowButton = ({ onClick, disabled }) => (
+  <IconButton onClick={onClick} disabled={disabled}>
     <ArrowDropDown />
   </IconButton>
 );
@@ -25,16 +25,17 @@ const twoDigits = (v) => v >= 10 ? v.toString() : '0' + v.toString();
 const Clock = ({ hours, minutes, seconds,
   incrementHour, decrementHour,
   incrementMinute, decrementMinute,
-  incrementSecond, decrementSecond }) => (
+  incrementSecond, decrementSecond,
+  isInSetTimeMode }) => (
     <Paper style={{ padding: '10px' }}>
       <Grid container spacing={16} justify="center" alignItems="center" direction="row">
         <Grid item>
           <Grid container spacing={16} justify="center" alignItems="center" direction="column">
-            <UpArrowButton onClick={incrementHour} />
+            <UpArrowButton onClick={incrementHour} disabled={!isInSetTimeMode} />
             <Typography variant="h3" component="h3">
               {twoDigits(hours)}
             </Typography>
-            <DownArrowButton onClick={decrementHour} />
+            <DownArrowButton onClick={decrementHour} disabled={!isInSetTimeMode} />
           </Grid>
         </Grid>
         <Grid item>
@@ -42,11 +43,11 @@ const Clock = ({ hours, minutes, seconds,
         </Grid>
         <Grid item>
           <Grid container spacing={16} justify="center" alignItems="center" direction="column">
-            <UpArrowButton onClick={incrementMinute} />
+            <UpArrowButton onClick={incrementMinute} disabled={!isInSetTimeMode} />
             <Typography variant="h3" component="h3">
               {twoDigits(minutes)}
             </Typography>
-            <DownArrowButton onClick={decrementMinute} />
+            <DownArrowButton onClick={decrementMinute} disabled={!isInSetTimeMode} />
           </Grid>
         </Grid>
         <Grid item>
@@ -54,11 +55,11 @@ const Clock = ({ hours, minutes, seconds,
         </Grid>
         <Grid item>
           <Grid container spacing={16} justify="center" alignItems="center" direction="column">
-            <UpArrowButton onClick={incrementSecond} />
+            <UpArrowButton onClick={incrementSecond} disabled={!isInSetTimeMode} />
             <Typography variant="h3" component="h3">
               {twoDigits(seconds)}
             </Typography>
-            <DownArrowButton onClick={decrementSecond} />
+            <DownArrowButton onClick={decrementSecond} disabled={!isInSetTimeMode} />
           </Grid>
         </Grid>
       </Grid>
