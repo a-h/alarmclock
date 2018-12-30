@@ -63,13 +63,9 @@ const mapStateToProps = state => {
   return {};
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  incrementHour() {
-    dispatch(hourIncrement());
-  },
-  decrementHour() {
-    dispatch(hourDecrement());
-  },
-});
+const mapDispatchToProps = {
+  incrementHour: hourIncrement,
+  decrementHour: hourDecrement,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clock);
