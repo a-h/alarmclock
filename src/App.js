@@ -29,9 +29,6 @@ const App = ({ time, isInSetTimeMode, toggleSetTimeMode }) => (
       <Grid item>
         <Clock hours={time.hours} minutes={time.minutes} seconds={time.seconds} isInSetTimeMode={isInSetTimeMode} />
       </Grid>
-      <Grid item>
-        <Button variant="contained">Set Alarm</Button>
-      </Grid>
     </Grid>
     <Grid container spacing={16} justify="center" alignItems="center" direction="row">
       <Grid item>
