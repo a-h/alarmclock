@@ -4,8 +4,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { ArrowDropUp, ArrowDropDown } from '@material-ui/icons';
-import { connect } from 'react-redux';
-import { hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement } from './reducers/modules/time'
 import PropTypes from 'prop-types';
 
 const UpArrowButton = ({ onClick, disabled }) => (
@@ -23,19 +21,19 @@ const DownArrowButton = ({ onClick, disabled }) => (
 const twoDigits = (v) => v >= 10 ? v.toString() : '0' + v.toString();
 
 const Clock = ({ hours, minutes, seconds,
-  incrementHour, decrementHour,
-  incrementMinute, decrementMinute,
-  incrementSecond, decrementSecond,
+  hourIncrement, hourDecrement,
+  minuteIncrement, minuteDecrement,
+  secondIncrement, secondDecrement,
   isInSetTimeMode }) => (
     <Paper style={{ padding: '10px' }}>
       <Grid container spacing={16} justify="center" alignItems="center" direction="row">
         <Grid item>
           <Grid container spacing={16} justify="center" alignItems="center" direction="column">
-            <UpArrowButton onClick={incrementHour} disabled={!isInSetTimeMode} />
+            <UpArrowButton onClick={hourIncrement} disabled={!isInSetTimeMode} />
             <Typography variant="h3" component="h3">
               {twoDigits(hours)}
             </Typography>
-            <DownArrowButton onClick={decrementHour} disabled={!isInSetTimeMode} />
+            <DownArrowButton onClick={hourDecrement} disabled={!isInSetTimeMode} />
           </Grid>
         </Grid>
         <Grid item>
@@ -43,11 +41,11 @@ const Clock = ({ hours, minutes, seconds,
         </Grid>
         <Grid item>
           <Grid container spacing={16} justify="center" alignItems="center" direction="column">
-            <UpArrowButton onClick={incrementMinute} disabled={!isInSetTimeMode} />
+            <UpArrowButton onClick={minuteIncrement} disabled={!isInSetTimeMode} />
             <Typography variant="h3" component="h3">
               {twoDigits(minutes)}
             </Typography>
-            <DownArrowButton onClick={decrementMinute} disabled={!isInSetTimeMode} />
+            <DownArrowButton onClick={minuteDecrement} disabled={!isInSetTimeMode} />
           </Grid>
         </Grid>
         <Grid item>
@@ -55,11 +53,11 @@ const Clock = ({ hours, minutes, seconds,
         </Grid>
         <Grid item>
           <Grid container spacing={16} justify="center" alignItems="center" direction="column">
-            <UpArrowButton onClick={incrementSecond} disabled={!isInSetTimeMode} />
+            <UpArrowButton onClick={secondIncrement} disabled={!isInSetTimeMode} />
             <Typography variant="h3" component="h3">
               {twoDigits(seconds)}
             </Typography>
-            <DownArrowButton onClick={decrementSecond} disabled={!isInSetTimeMode} />
+            <DownArrowButton onClick={secondDecrement} disabled={!isInSetTimeMode} />
           </Grid>
         </Grid>
       </Grid>
@@ -67,25 +65,12 @@ const Clock = ({ hours, minutes, seconds,
   );
 
 Clock.propTypes = {
-  incrementHour: PropTypes.func,
-  decrementHour: PropTypes.func,
-  incrementMinute: PropTypes.func,
-  decrementMinute: PropTypes.func,
-  incrementSecond: PropTypes.func,
-  decrementSecond: PropTypes.func,
+  hourIncrement: PropTypes.func,
+  hourDecrement: PropTypes.func,
+  minuteIncrement: PropTypes.func,
+  minuteDecrement: PropTypes.func,
+  secondIncrement: PropTypes.func,
+  secondDecrement: PropTypes.func,
 };
 
-const mapStateToProps = state => {
-  return {};
-};
-
-const mapDispatchToProps = {
-  incrementHour: hourIncrement,
-  decrementHour: hourDecrement,
-  incrementMinute: minuteIncrement,
-  decrementMinute: minuteDecrement,
-  incrementSecond: secondIncrement,
-  decrementSecond: secondDecrement,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Clock);
+export default Clock;

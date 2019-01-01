@@ -10,7 +10,6 @@ export const MINUTE_INCREMENT = 'TIMER/MINUTE_INCREMENT';
 export const MINUTE_DECREMENT = 'TIMER/MINUTE_DECREMENT';
 export const SECOND_INCREMENT = 'TIMER/SECOND_INCREMENT';
 export const SECOND_DECREMENT = 'TIMER/SECOND_DECREMENT';
-export const TOGGLE_SET_TIME_MODE = 'TIMER/TOGGLE_SET_TIME_MODE';
 
 // ACTION CREATORS
 export const hourIncrement = () => ({
@@ -37,52 +36,24 @@ export const secondDecrement = () => ({
   type: SECOND_DECREMENT
 });
 
-export const toggleSetTimeMode = () => ({
-  type: TOGGLE_SET_TIME_MODE
-});
-
 // SELECTORS
-export const getTime = state => time(state.time.hours, state.time.minutes, state.time.seconds);
-export const getIsInSetTimeMode = state => state.setTimeMode;
+export const getTime = state => time(state.hours, state.minutes, state.seconds);
 
 const startDate = new Date();
 
-const defaultState = {
-  time: time(startDate.getHours(), startDate.getMinutes(), startDate.getSeconds()),
-}
+const defaultState = time(startDate.getHours(), startDate.getMinutes(), startDate.getSeconds());
 
 // REDUCERS
 const timeReducers = handleActions({
-  [SECOND_ELAPSED]: (state) => {
-    return Object.assign({}, state, { time: addSecond(getTime(state)) });
-  },
-  [HOUR_INCREMENT]: (state) => {
-    return Object.assign({}, state, { time: incrementHour(getTime(state))});
-  },
-  [HOUR_DECREMENT]: (state) => {
-    return Object.assign({}, state, { time: decrementHour(getTime(state))});
-  },
-  [MINUTE_INCREMENT]: (state) => {
-    return Object.assign({}, state, { time: incrementMinute(getTime(state))});
-  },
-  [MINUTE_DECREMENT]: (state) => {
-    return Object.assign({}, state, { time: decrementMinute(getTime(state))});
-  },
-  [SECOND_INCREMENT]: (state) => {
-    return Object.assign({}, state, { time: incrementSecond(getTime(state))});
-  },
-  [SECOND_DECREMENT]: (state) => {
-    return Object.assign({}, state, { time: decrementSecond(getTime(state))});
-  },
-}, defaultState);
-
-const modeReducers = handleActions({
-  [TOGGLE_SET_TIME_MODE]: (state) => {
-    return Object.assign({}, state, { setTimeMode: !state.setTimeMode });
-  },
+  [SECOND_ELAPSED]: state => addSecond(getTime(state)),
+  [HOUR_INCREMENT]: state => incrementHour(getTime(state)),
+  [HOUR_DECREMENT]: state => decrementHour(getTime(state)),
+  [MINUTE_INCREMENT]: state => incrementMinute(getTime(state)),
+  [MINUTE_DECREMENT]: state => decrementMinute(getTime(state)),
+  [SECOND_INCREMENT]: state => incrementSecond(getTime(state)),
+  [SECOND_DECREMENT]: state => decrementSecond(getTime(state)),
 }, defaultState);
 
 export default combineReducers({
   time: timeReducers,
-  mode: modeReducers,
 });

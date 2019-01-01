@@ -2,73 +2,87 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 import Clock from './Clock.js'
-import { getTime } from './reducers'
+import { getTime, getAlarmTime } from './reducers'
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@material-ui/core';
 import { Alarm, WbSunny, AccessTime, Settings } from '@material-ui/icons';
-import { toggleSetTimeMode } from './reducers/modules/time';
-import { toggleSetAlarmMode } from './reducers/modules/app';
+import { toggleSetAlarmMode, toggleSetTimeMode } from './reducers/modules/app';
 import { getIsInSetTimeMode, getIsInSetAlarmMode } from './reducers'
+import { hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement } from './reducers/modules/time'
+import { alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement } from './reducers/modules/alarm'
 
-const App = ({ time, isInSetTimeMode, toggleSetTimeMode, isInSetAlarmMode, toggleSetAlarmMode }) => (
-  <div className="App" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-    <Grid container spacing={16} justify="center" alignItems="center" direction="row">
-      <Grid item>
-        <Button variant="contained" color="default" onClick={toggleSetAlarmMode}>
-          Set Alarm
+const App = ({ time, isInSetTimeMode, toggleSetTimeMode, isInSetAlarmMode, toggleSetAlarmMode, alarmTime,
+  hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement,
+  alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement,
+}) => (
+    <div className="App" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+      <Grid container spacing={16} justify="center" alignItems="center" direction="row">
+        <Grid item>
+          <Button variant="contained" color="default" onClick={toggleSetAlarmMode}>
+            Set Alarm
               <Alarm />
-        </Button>
-        <Dialog
-          open={isInSetAlarmMode}
-          onClose={toggleSetAlarmMode}
-        >
-          <DialogTitle>{"Set alarm"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Let Google help apps determine location. This means sending anonymous location data to
-              Google, even when no apps are running.
+          </Button>
+          <Dialog
+            open={isInSetAlarmMode}
+            onClose={toggleSetAlarmMode}
+          >
+            <DialogTitle>{"Set alarm"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Set the time when the alarm is going to be triggered.
             </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button color="primary">
-              Disagree
+            </DialogContent>
+              <Clock hours={alarmTime.hours} minutes={alarmTime.minutes} seconds={alarmTime.seconds}
+                isInSetTimeMode={true}
+                hourIncrement={alarmHourIncrement} hourDecrement={alarmHourDecrement}
+                minuteIncrement={alarmMinuteIncrement} minuteDecrement={alarmMinuteDecrement}
+                secondIncrement={alarmSecondIncrement} secondDecrement={alarmSecondDecrement}
+              />
+            <DialogActions>
+              <Button color="primary">
+                Disagree
             </Button>
-            <Button color="primary" autoFocus>
-              Agree
+              <Button color="primary" autoFocus>
+                Agree
             </Button>
-          </DialogActions>
-        </Dialog>
-      </Grid>
-      <Grid item>
-        <Button variant="contained" color="default">
-          Brightness
+            </DialogActions>
+          </Dialog>
+        </Grid>
+        <Grid item>
+          <Button variant="contained" color="default">
+            Brightness
               <WbSunny />
-        </Button>
+          </Button>
+        </Grid>
       </Grid>
-    </Grid>
-    <Grid container spacing={16} justify="center" alignItems="center" direction="column">
-      <Grid item>
-        <Clock hours={time.hours} minutes={time.minutes} seconds={time.seconds} isInSetTimeMode={isInSetTimeMode} />
+      <Grid container spacing={16} justify="center" alignItems="center" direction="column">
+        <Grid item>
+          <Clock hours={time.hours} minutes={time.minutes} seconds={time.seconds} isInSetTimeMode={isInSetTimeMode}
+            hourIncrement={hourIncrement} hourDecrement={hourDecrement}
+            minuteIncrement={minuteIncrement} minuteDecrement={minuteDecrement}
+            secondIncrement={secondIncrement} secondDecrement={secondDecrement}
+          />
+        </Grid>
       </Grid>
-    </Grid>
-    <Grid container spacing={16} justify="center" alignItems="center" direction="row">
-      <Grid item>
-        <Button variant="contained" color="default">
-          Settings
+      <Grid container spacing={16} justify="center" alignItems="center" direction="row">
+        <Grid item>
+          <Button variant="contained" color="default">
+            Settings
               <Settings />
-        </Button>
-      </Grid>
-      <Grid item>
-        <Button variant="contained" color="default" onClick={toggleSetTimeMode}>
-          Set Time
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="contained" color="default" onClick={toggleSetTimeMode}>
+            Set Time
               <AccessTime />
-        </Button>
+          </Button>
+        </Grid>
       </Grid>
-    </Grid>
-  </div>
-);
+    </div>
+  );
 
 const mapStateToProps = state => ({
   time: getTime(state),
+  alarmTime: getAlarmTime(state),
   isInSetTimeMode: getIsInSetTimeMode(state),
   isInSetAlarmMode: getIsInSetAlarmMode(state),
 });
@@ -76,7 +90,18 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   toggleSetTimeMode: toggleSetTimeMode,
   toggleSetAlarmMode: toggleSetAlarmMode,
+  hourIncrement: hourIncrement,
+  hourDecrement: hourDecrement,
+  minuteIncrement: minuteIncrement,
+  minuteDecrement: minuteDecrement,
+  secondIncrement: secondIncrement,
+  secondDecrement: secondDecrement,
+  alarmHourIncrement: alarmHourIncrement,
+  alarmHourDecrement: alarmHourDecrement,
+  alarmMinuteIncrement: alarmMinuteIncrement,
+  alarmMinuteDecrement: alarmMinuteDecrement,
+  alarmSecondIncrement: alarmSecondIncrement,
+  alarmSecondDecrement: alarmSecondDecrement,
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
