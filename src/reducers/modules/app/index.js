@@ -41,7 +41,7 @@ export const getAlarmSound = state => (state && state.alarmSound) ? state.alarmS
 const defaultState = {
   isInSetAlarmMode: false,
   isInSetTimeMode: false,
-
+  alarmSound : 'alarm1.mp3',
 };
 
 // REDUCERS
