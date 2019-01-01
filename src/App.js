@@ -10,6 +10,7 @@ import { getIsAlarmActive, getIsInSetTimeMode, getIsInSetAlarmMode, getShouldSou
 import { hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement } from './reducers/modules/time'
 import { alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement } from './reducers/modules/alarm'
 import { toggleAlarmActive, setAlarmActive } from './reducers/modules/alarm'
+import Sound from 'react-sound';
 
 const App = ({ time,
   isAlarmActive, toggleAlarmActive, setAlarmActive, shouldSoundAlarm,
@@ -28,13 +29,17 @@ const App = ({ time,
           <Dialog open={shouldSoundAlarm}>
             <DialogTitle>{"ALARM ACTIVE!"}</DialogTitle>
             <DialogContent>
+              <Sound
+                url="alarm1.mp3"
+                playStatus={Sound.status.PLAYING}
+              />
               <DialogContentText>
                 The alarm is absolutely blaring loud.
             </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button color="primary" autoFocus>
-                This button does nothing
+              <Button color="primary" autoFocus onClick={toggleAlarmActive}>
+                Turn alarm off
             </Button>
             </DialogActions>
           </Dialog>

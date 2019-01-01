@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import './index.css';
@@ -9,16 +10,43 @@ import Timer from './components/timer';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers'
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancers(
   applyMiddleware(thunk)))
 
-ReactDOM.render(
-  <Provider store={store}>
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+  typography: {
+    useNextVariants: true,
+  },
+});
+
+const getTheme = s => {
+  console.log("getTheme", JSON.stringify(s));
+  return theme;
+}
+
+const Root = ({ theme }) => (
+  <MuiThemeProvider theme={getTheme(theme)}>
     <CssBaseline />
     <Timer />
     <App />
+  </MuiThemeProvider>
+);
+
+const mapStateToProps = state => ({
+  theme: state.theme
+});
+
+const RootContainer = connect(mapStateToProps, {})(Root);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <RootContainer />
   </Provider>,
   document.getElementById('root')
 );

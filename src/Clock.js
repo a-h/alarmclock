@@ -30,31 +30,31 @@ const Clock = ({ hours, minutes, seconds,
         <Grid item>
           <Grid container spacing={16} justify="center" alignItems="center" direction="column">
             <UpArrowButton onClick={hourIncrement} disabled={!isInSetTimeMode} />
-            <Typography variant="h3" component="h3">
+            <Typography variant="h3">
               {twoDigits(hours)}
             </Typography>
             <DownArrowButton onClick={hourDecrement} disabled={!isInSetTimeMode} />
           </Grid>
         </Grid>
         <Grid item>
-          <Typography variant="h3" component="h3">:</Typography>
+          <Typography variant="h3">:</Typography>
         </Grid>
         <Grid item>
           <Grid container spacing={16} justify="center" alignItems="center" direction="column">
             <UpArrowButton onClick={minuteIncrement} disabled={!isInSetTimeMode} />
-            <Typography variant="h3" component="h3">
+            <Typography variant="h3">
               {twoDigits(minutes)}
             </Typography>
             <DownArrowButton onClick={minuteDecrement} disabled={!isInSetTimeMode} />
           </Grid>
         </Grid>
         <Grid item>
-          <Typography variant="h3" component="h3">:</Typography>
+          <Typography variant="h3">:</Typography>
         </Grid>
         <Grid item>
           <Grid container spacing={16} justify="center" alignItems="center" direction="column">
             <UpArrowButton onClick={secondIncrement} disabled={!isInSetTimeMode} />
-            <Typography variant="h3" component="h3">
+            <Typography variant="h3">
               {twoDigits(seconds)}
             </Typography>
             <DownArrowButton onClick={secondDecrement} disabled={!isInSetTimeMode} />
