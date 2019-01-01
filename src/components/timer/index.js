@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { secondElapsed} from '../../reducers/modules/time';
 
+// ACTIONS
+export const SECOND_ELAPSED = 'TIMER/SECOND_ELAPSED';
+
+// ACTION CREATORS
+export const secondElapsed = () => ({
+  type: SECOND_ELAPSED
+});
+
+// COMPONENTS
 class Timer extends Component {
   render() {
     return <div>{this.props.children}</div>;

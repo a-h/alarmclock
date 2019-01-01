@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import { time, addSecond, incrementHour, decrementHour, incrementMinute, decrementMinute, incrementSecond, decrementSecond } from '../../../time';
+import { SECOND_ELAPSED } from '../../../components/timer'
 
 // ACTIONS
-export const SECOND_ELAPSED = 'TIMER/SECOND_ELAPSED';
 export const HOUR_INCREMENT = 'TIMER/HOUR_INCREMENT';
 export const HOUR_DECREMENT = 'TIMER/HOUR_DECREMENT';
 export const MINUTE_INCREMENT = 'TIMER/MINUTE_INCREMENT';
@@ -13,10 +13,6 @@ export const SECOND_DECREMENT = 'TIMER/SECOND_DECREMENT';
 export const TOGGLE_SET_TIME_MODE = 'TIMER/TOGGLE_SET_TIME_MODE';
 
 // ACTION CREATORS
-export const secondElapsed = () => ({
-  type: SECOND_ELAPSED
-});
-
 export const hourIncrement = () => ({
   type: HOUR_INCREMENT
 });
