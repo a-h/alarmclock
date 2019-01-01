@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import { time, incrementHour, decrementHour, incrementMinute, decrementMinute, incrementSecond, decrementSecond } from '../../../time';
-import { SECOND_ELAPSED } from '../../../components/timer'
 
 // ACTIONS
 export const ALARM_HOUR_INCREMENT = 'ALARM/HOUR_INCREMENT';
@@ -48,16 +47,24 @@ export const alarmSecondDecrement = () => ({
 
 // SELECTORS
 export const getIsAlarmActive = state => state ? state.isAlarmActive === true : false;
-export const getAlarmTime = state => state ? 
+export const getAlarmTime = state => state ?
   time(state.hours, state.minutes, state.seconds)
   : time(0, 0, 0);
 
+const ALARM_DURATION_MINUTES = 15;
+
+export const shouldSoundAlarm = (isAlarmActive, currentTime, alarmTime) => {
+  if (!isAlarmActive) {
+    return false;
+  }
+  const currentDate = new Date(2000, 0, 1, currentTime.hours, currentTime.minutes, currentTime.seconds);
+  const alarmDate = new Date(2000, 0, 1, alarmTime.hours, alarmTime.minutes, alarmTime.seconds);
+  const alarmEndDate = new Date(2000, 0, 1, alarmTime.hours, alarmTime.minutes + ALARM_DURATION_MINUTES, alarmTime.seconds);
+  return currentDate >= alarmDate && currentDate <= alarmEndDate;
+}
+
 // REDUCERS
 const timeReducers = handleActions({
-  [SECOND_ELAPSED]: (state) => {
-    //TODO: Handle the alarm if required by dispatching an event.
-    return state;
-  },
   [ALARM_HOUR_INCREMENT]: state => incrementHour(getAlarmTime(state)),
   [ALARM_HOUR_DECREMENT]: state => decrementHour(getAlarmTime(state)),
   [ALARM_MINUTE_INCREMENT]: state => incrementMinute(getAlarmTime(state)),

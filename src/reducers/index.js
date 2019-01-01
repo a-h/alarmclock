@@ -17,6 +17,9 @@ export const getAlarmTime = state =>
 export const getIsAlarmActive = state =>
     fromAlarm.getIsAlarmActive(state.alarm.modes);
 
+export const getShouldSoundAlarm = state => 
+    fromAlarm.shouldSoundAlarm(getIsAlarmActive(state), getTime(state), getAlarmTime(state));
+
 const rootReducer = combineReducers({
     timer,
     alarm,

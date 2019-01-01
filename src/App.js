@@ -6,14 +6,14 @@ import { getTime, getAlarmTime } from './reducers'
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@material-ui/core';
 import { Alarm, WbSunny, AccessTime, Settings } from '@material-ui/icons';
 import { toggleSetAlarmMode, toggleSetTimeMode } from './reducers/modules/app';
-import { getIsAlarmActive, getIsInSetTimeMode, getIsInSetAlarmMode } from './reducers'
+import { getIsAlarmActive, getIsInSetTimeMode, getIsInSetAlarmMode, getShouldSoundAlarm } from './reducers'
 import { hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement } from './reducers/modules/time'
 import { alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement } from './reducers/modules/alarm'
 import { toggleAlarmActive, setAlarmActive } from './reducers/modules/alarm'
 
-const App = ({ time, 
-  isAlarmActive, toggleAlarmActive, setAlarmActive, 
-  isInSetTimeMode, toggleSetTimeMode, 
+const App = ({ time,
+  isAlarmActive, toggleAlarmActive, setAlarmActive, shouldSoundAlarm,
+  isInSetTimeMode, toggleSetTimeMode,
   isInSetAlarmMode, toggleSetAlarmMode, alarmTime,
   hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement,
   alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement,
@@ -25,6 +25,19 @@ const App = ({ time,
             Switch Alarm {isAlarmActive ? "Off" : "On"}
             <Alarm />
           </Button>
+          <Dialog open={shouldSoundAlarm}>
+            <DialogTitle>{"ALARM ACTIVE!"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                The alarm is absolutely blaring loud.
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button color="primary" autoFocus>
+                This button does nothing
+            </Button>
+            </DialogActions>
+          </Dialog>
         </Grid>
         <Grid item>
           <Button variant="contained" color="default" onClick={toggleSetAlarmMode}>
@@ -40,13 +53,13 @@ const App = ({ time,
               <DialogContentText>
                 Set the time when the alarm is going to be triggered.
             </DialogContentText>
+              <Clock hours={alarmTime.hours} minutes={alarmTime.minutes} seconds={alarmTime.seconds}
+                isInSetTimeMode={true}
+                hourIncrement={alarmHourIncrement} hourDecrement={alarmHourDecrement}
+                minuteIncrement={alarmMinuteIncrement} minuteDecrement={alarmMinuteDecrement}
+                secondIncrement={alarmSecondIncrement} secondDecrement={alarmSecondDecrement}
+              />
             </DialogContent>
-            <Clock hours={alarmTime.hours} minutes={alarmTime.minutes} seconds={alarmTime.seconds}
-              isInSetTimeMode={true}
-              hourIncrement={alarmHourIncrement} hourDecrement={alarmHourDecrement}
-              minuteIncrement={alarmMinuteIncrement} minuteDecrement={alarmMinuteDecrement}
-              secondIncrement={alarmSecondIncrement} secondDecrement={alarmSecondDecrement}
-            />
             <DialogActions>
               <Button color="primary" autoFocus onClick={() => { setAlarmActive(); toggleSetAlarmMode(); }}>
                 Done
@@ -93,6 +106,7 @@ const mapStateToProps = state => ({
   isAlarmActive: getIsAlarmActive(state),
   isInSetTimeMode: getIsInSetTimeMode(state),
   isInSetAlarmMode: getIsInSetAlarmMode(state),
+  shouldSoundAlarm: getShouldSoundAlarm(state),
 });
 
 const mapDispatchToProps = {
