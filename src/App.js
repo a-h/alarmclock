@@ -36,7 +36,7 @@ const App = ({ time,
                 playStatus={Sound.status.PLAYING}
               />
               <DialogContentText>
-                The alarm is absolutely blaring loud.
+                The alarm has been triggered.
             </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -74,12 +74,6 @@ const App = ({ time,
             </DialogActions>
           </Dialog>
         </Grid>
-        <Grid item>
-          <Button variant="contained" color="default" onClick={toggleDarkMode}>
-            Toggle Dark Mode
-              <WbSunny />
-          </Button>
-        </Grid>
       </Grid>
       <Grid container spacing={16} justify="center" alignItems="center" direction="column">
         <Grid item>
@@ -92,8 +86,14 @@ const App = ({ time,
       </Grid>
       <Grid container spacing={16} justify="center" alignItems="center" direction="row">
         <Grid item>
+          <Button variant="contained" color="default" onClick={toggleDarkMode}>
+            Toggle Dark Mode
+              <WbSunny />
+          </Button>
+        </Grid>
+        <Grid item>
           <Button variant="contained" color="default" onClick={toggleChooseAlarmMode}>
-            Choose audio
+            Audio
               <Settings />
           </Button>
         </Grid>
