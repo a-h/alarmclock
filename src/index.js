@@ -35,7 +35,6 @@ const darkTheme = createMuiTheme({
 });
 
 const getTheme = darkMode => {
-  console.log("getTheme", JSON.stringify(darkMode));
   if (darkMode) {
     return darkTheme;
   }
