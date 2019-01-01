@@ -16,7 +16,16 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancers(
   applyMiddleware(thunk)))
 
-const theme = createMuiTheme({
+const lightTheme = createMuiTheme({
+  palette: {
+    type: 'light',
+  },
+  typography: {
+    useNextVariants: true,
+  },
+});
+
+const darkTheme = createMuiTheme({
   palette: {
     type: 'dark',
   },
@@ -25,13 +34,16 @@ const theme = createMuiTheme({
   },
 });
 
-const getTheme = s => {
-  console.log("getTheme", JSON.stringify(s));
-  return theme;
+const getTheme = darkMode => {
+  console.log("getTheme", JSON.stringify(darkMode));
+  if (darkMode) {
+    return darkTheme;
+  }
+  return lightTheme;
 }
 
-const Root = ({ theme }) => (
-  <MuiThemeProvider theme={getTheme(theme)}>
+const Root = ({ isInDarkMode }) => (
+  <MuiThemeProvider theme={getTheme(isInDarkMode)}>
     <CssBaseline />
     <Timer />
     <App />
@@ -39,7 +51,7 @@ const Root = ({ theme }) => (
 );
 
 const mapStateToProps = state => ({
-  theme: state.theme
+  isInDarkMode: state.app.modes.isInDarkMode,
 });
 
 const RootContainer = connect(mapStateToProps, {})(Root);

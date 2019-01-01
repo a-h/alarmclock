@@ -5,7 +5,7 @@ import Clock from './Clock.js'
 import { getTime, getAlarmTime } from './reducers'
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@material-ui/core';
 import { Alarm, WbSunny, AccessTime, Settings } from '@material-ui/icons';
-import { toggleSetAlarmMode, toggleSetTimeMode } from './reducers/modules/app';
+import { toggleSetAlarmMode, toggleSetTimeMode, toggleDarkMode } from './reducers/modules/app';
 import { getIsAlarmActive, getIsInSetTimeMode, getIsInSetAlarmMode, getShouldSoundAlarm } from './reducers'
 import { hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement } from './reducers/modules/time'
 import { alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement } from './reducers/modules/alarm'
@@ -16,6 +16,7 @@ const App = ({ time,
   isAlarmActive, toggleAlarmActive, setAlarmActive, shouldSoundAlarm,
   isInSetTimeMode, toggleSetTimeMode,
   isInSetAlarmMode, toggleSetAlarmMode, alarmTime,
+  toggleDarkMode,
   hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement,
   alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement,
 }) => (
@@ -73,8 +74,8 @@ const App = ({ time,
           </Dialog>
         </Grid>
         <Grid item>
-          <Button variant="contained" color="default">
-            Brightness
+          <Button variant="contained" color="default" onClick={toggleDarkMode}>
+            Toggle Dark Mode
               <WbSunny />
           </Button>
         </Grid>
@@ -89,12 +90,6 @@ const App = ({ time,
         </Grid>
       </Grid>
       <Grid container spacing={16} justify="center" alignItems="center" direction="row">
-        <Grid item>
-          <Button variant="contained" color="default">
-            Settings
-              <Settings />
-          </Button>
-        </Grid>
         <Grid item>
           <Button variant="contained" color="default" onClick={toggleSetTimeMode}>
             Set Time
@@ -117,6 +112,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   toggleAlarmActive: toggleAlarmActive,
   setAlarmActive: setAlarmActive,
+  toggleDarkMode: toggleDarkMode,
   toggleSetTimeMode: toggleSetTimeMode,
   toggleSetAlarmMode: toggleSetAlarmMode,
   hourIncrement: hourIncrement,

@@ -4,6 +4,7 @@ import { handleActions } from 'redux-actions';
 // ACTIONS
 export const TOGGLE_SET_ALARM_MODE = 'APP/TOGGLE_SET_ALARM_MODE';
 export const TOGGLE_SET_TIME_MODE = 'APP/TOGGLE_SET_TIME_MODE';
+export const TOGGLE_DARK_MODE = 'APP/TOGGLE_DARK_MODE';
 
 // ACTION CREATORS
 export const toggleSetAlarmMode = () => ({
@@ -12,6 +13,10 @@ export const toggleSetAlarmMode = () => ({
 
 export const toggleSetTimeMode = () => ({
   type: TOGGLE_SET_TIME_MODE
+});
+
+export const toggleDarkMode = () => ({
+  type: TOGGLE_DARK_MODE
 });
 
 // SELECTORS
@@ -30,6 +35,9 @@ const modeReducers = handleActions({
   },
   [TOGGLE_SET_TIME_MODE]: (state) => {
     return Object.assign({}, state, { isInSetTimeMode: !state.isInSetTimeMode });
+  },
+  [TOGGLE_DARK_MODE]: (state) => {
+    return Object.assign({}, state, { isInDarkMode: !state.isInDarkMode });
   },
 }, defaultState);
 
