@@ -10,8 +10,18 @@ export const ALARM_MINUTE_INCREMENT = 'ALARM/MINUTE_INCREMENT';
 export const ALARM_MINUTE_DECREMENT = 'ALARM/MINUTE_DECREMENT';
 export const ALARM_SECOND_INCREMENT = 'ALARM/SECOND_INCREMENT';
 export const ALARM_SECOND_DECREMENT = 'ALARM/SECOND_DECREMENT';
+export const TOGGLE_ALARM_ACTIVE = 'APP/TOGGLE_ALARM_ACTIVE';
+export const SET_ALARM_ACTIVE = 'APP/SET_ALARM_ACTIVE';
 
 // ACTION CREATORS
+export const toggleAlarmActive = () => ({
+  type: TOGGLE_ALARM_ACTIVE
+});
+
+export const setAlarmActive = () => ({
+  type: SET_ALARM_ACTIVE
+});
+
 export const alarmHourIncrement = () => ({
   type: ALARM_HOUR_INCREMENT
 });
@@ -37,11 +47,10 @@ export const alarmSecondDecrement = () => ({
 });
 
 // SELECTORS
-const defaultAlarmTime = time(0, 0, 0);
-
+export const getIsAlarmActive = state => state ? state.isAlarmActive === true : false;
 export const getAlarmTime = state => state ? 
   time(state.hours, state.minutes, state.seconds)
-  : defaultAlarmTime;
+  : time(0, 0, 0);
 
 // REDUCERS
 const timeReducers = handleActions({
@@ -55,8 +64,22 @@ const timeReducers = handleActions({
   [ALARM_MINUTE_DECREMENT]: state => decrementMinute(getAlarmTime(state)),
   [ALARM_SECOND_INCREMENT]: state => incrementSecond(getAlarmTime(state)),
   [ALARM_SECOND_DECREMENT]: state => decrementSecond(getAlarmTime(state)),
-}, defaultAlarmTime);
+}, time(0, 0, 0));
+
+const defaultModeState = {
+  isAlarmActive: false,
+}
+
+const modeReducers = handleActions({
+  [TOGGLE_ALARM_ACTIVE]: (state) => {
+    return Object.assign({}, state, { isAlarmActive: !state.isAlarmActive });
+  },
+  [SET_ALARM_ACTIVE]: (state) => {
+    return Object.assign({}, state, { isAlarmActive: true });
+  },
+}, defaultModeState);
 
 export default combineReducers({
   time: timeReducers,
+  modes: modeReducers,
 });

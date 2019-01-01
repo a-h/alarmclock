@@ -5,10 +5,11 @@ import Clock from './Clock.js'
 import { getTime, getAlarmTime } from './reducers'
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@material-ui/core';
 import { Alarm, WbSunny, AccessTime, Settings } from '@material-ui/icons';
-import { toggleAlarmActive, setAlarmActive, toggleSetAlarmMode, toggleSetTimeMode } from './reducers/modules/app';
+import { toggleSetAlarmMode, toggleSetTimeMode } from './reducers/modules/app';
 import { getIsAlarmActive, getIsInSetTimeMode, getIsInSetAlarmMode } from './reducers'
 import { hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement } from './reducers/modules/time'
 import { alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement } from './reducers/modules/alarm'
+import { toggleAlarmActive, setAlarmActive } from './reducers/modules/alarm'
 
 const App = ({ time, 
   isAlarmActive, toggleAlarmActive, setAlarmActive, 
