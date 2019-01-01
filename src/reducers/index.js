@@ -5,13 +5,16 @@ import { combineReducers } from 'redux';
 
 export const getTime = state => fromTime.getTime(state.timer.time);
 
-export const getIsInSetTimeMode = state => 
+export const getIsAlarmActive = state =>
+    fromApp.getIsAlarmActive(state.app.modes);
+
+export const getIsInSetTimeMode = state =>
     fromApp.getIsInSetTimeMode(state.app.modes);
 
-export const getAlarmTime = state => 
+export const getAlarmTime = state =>
     fromAlarm.getAlarmTime(state.alarm.time);
 
-export const getIsInSetAlarmMode = state => 
+export const getIsInSetAlarmMode = state =>
     fromApp.getIsInSetAlarmMode(state.app.modes);
 
 const rootReducer = combineReducers({

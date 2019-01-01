@@ -5,20 +5,29 @@ import Clock from './Clock.js'
 import { getTime, getAlarmTime } from './reducers'
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@material-ui/core';
 import { Alarm, WbSunny, AccessTime, Settings } from '@material-ui/icons';
-import { toggleSetAlarmMode, toggleSetTimeMode } from './reducers/modules/app';
-import { getIsInSetTimeMode, getIsInSetAlarmMode } from './reducers'
+import { toggleAlarmActive, setAlarmActive, toggleSetAlarmMode, toggleSetTimeMode } from './reducers/modules/app';
+import { getIsAlarmActive, getIsInSetTimeMode, getIsInSetAlarmMode } from './reducers'
 import { hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement } from './reducers/modules/time'
 import { alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement } from './reducers/modules/alarm'
 
-const App = ({ time, isInSetTimeMode, toggleSetTimeMode, isInSetAlarmMode, toggleSetAlarmMode, alarmTime,
+const App = ({ time, 
+  isAlarmActive, toggleAlarmActive, setAlarmActive, 
+  isInSetTimeMode, toggleSetTimeMode, 
+  isInSetAlarmMode, toggleSetAlarmMode, alarmTime,
   hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement,
   alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement,
 }) => (
     <div className="App" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
       <Grid container spacing={16} justify="center" alignItems="center" direction="row">
         <Grid item>
+          <Button variant="contained" color="default" onClick={toggleAlarmActive}>
+            Switch Alarm {isAlarmActive ? "Off" : "On"}
+            <Alarm />
+          </Button>
+        </Grid>
+        <Grid item>
           <Button variant="contained" color="default" onClick={toggleSetAlarmMode}>
-            Set Alarm
+            Set Alarm Time
               <Alarm />
           </Button>
           <Dialog
@@ -31,18 +40,15 @@ const App = ({ time, isInSetTimeMode, toggleSetTimeMode, isInSetAlarmMode, toggl
                 Set the time when the alarm is going to be triggered.
             </DialogContentText>
             </DialogContent>
-              <Clock hours={alarmTime.hours} minutes={alarmTime.minutes} seconds={alarmTime.seconds}
-                isInSetTimeMode={true}
-                hourIncrement={alarmHourIncrement} hourDecrement={alarmHourDecrement}
-                minuteIncrement={alarmMinuteIncrement} minuteDecrement={alarmMinuteDecrement}
-                secondIncrement={alarmSecondIncrement} secondDecrement={alarmSecondDecrement}
-              />
+            <Clock hours={alarmTime.hours} minutes={alarmTime.minutes} seconds={alarmTime.seconds}
+              isInSetTimeMode={true}
+              hourIncrement={alarmHourIncrement} hourDecrement={alarmHourDecrement}
+              minuteIncrement={alarmMinuteIncrement} minuteDecrement={alarmMinuteDecrement}
+              secondIncrement={alarmSecondIncrement} secondDecrement={alarmSecondDecrement}
+            />
             <DialogActions>
-              <Button color="primary">
-                Disagree
-            </Button>
-              <Button color="primary" autoFocus>
-                Agree
+              <Button color="primary" autoFocus onClick={() => { setAlarmActive(); toggleSetAlarmMode(); }}>
+                Done
             </Button>
             </DialogActions>
           </Dialog>
@@ -83,11 +89,14 @@ const App = ({ time, isInSetTimeMode, toggleSetTimeMode, isInSetAlarmMode, toggl
 const mapStateToProps = state => ({
   time: getTime(state),
   alarmTime: getAlarmTime(state),
+  isAlarmActive: getIsAlarmActive(state),
   isInSetTimeMode: getIsInSetTimeMode(state),
   isInSetAlarmMode: getIsInSetAlarmMode(state),
 });
 
 const mapDispatchToProps = {
+  toggleAlarmActive: toggleAlarmActive,
+  setAlarmActive: setAlarmActive,
   toggleSetTimeMode: toggleSetTimeMode,
   toggleSetAlarmMode: toggleSetAlarmMode,
   hourIncrement: hourIncrement,
