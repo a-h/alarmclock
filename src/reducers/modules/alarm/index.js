@@ -11,6 +11,7 @@ export const ALARM_SECOND_INCREMENT = 'ALARM/SECOND_INCREMENT';
 export const ALARM_SECOND_DECREMENT = 'ALARM/SECOND_DECREMENT';
 export const TOGGLE_ALARM_ACTIVE = 'APP/TOGGLE_ALARM_ACTIVE';
 export const SET_ALARM_ACTIVE = 'APP/SET_ALARM_ACTIVE';
+export const ALARM_MUTE = 'ALARM/MUTE';
 
 // ACTION CREATORS
 export const toggleAlarmActive = () => ({
@@ -19,6 +20,10 @@ export const toggleAlarmActive = () => ({
 
 export const setAlarmActive = () => ({
   type: SET_ALARM_ACTIVE
+});
+
+export const muteAlarm = () => ({
+  type: ALARM_MUTE
 });
 
 export const alarmHourIncrement = () => ({
@@ -50,18 +55,7 @@ export const getIsAlarmActive = state => state ? state.isAlarmActive === true : 
 export const getAlarmTime = state => state ?
   time(state.hours, state.minutes, state.seconds)
   : time(0, 0, 0);
-
-const ALARM_DURATION_MINUTES = 15;
-
-export const shouldSoundAlarm = (isAlarmActive, currentTime, alarmTime) => {
-  if (!isAlarmActive) {
-    return false;
-  }
-  const currentDate = new Date(2000, 0, 1, currentTime.hours, currentTime.minutes, currentTime.seconds);
-  const alarmDate = new Date(2000, 0, 1, alarmTime.hours, alarmTime.minutes, alarmTime.seconds);
-  const alarmEndDate = new Date(2000, 0, 1, alarmTime.hours, alarmTime.minutes + ALARM_DURATION_MINUTES, alarmTime.seconds);
-  return currentDate >= alarmDate && currentDate <= alarmEndDate;
-}
+export const getIsAlarmSounding = state => state ? state.isAlarmSounding === true : false;
 
 // REDUCERS
 const timeReducers = handleActions({
@@ -75,6 +69,7 @@ const timeReducers = handleActions({
 
 const defaultModeState = {
   isAlarmActive: false,
+  isAlarmSounding: false,
 }
 
 const modeReducers = handleActions({
@@ -83,6 +78,9 @@ const modeReducers = handleActions({
   },
   [SET_ALARM_ACTIVE]: (state) => {
     return Object.assign({}, state, { isAlarmActive: true });
+  },
+  [ALARM_MUTE]: (state) => {
+    return Object.assign({}, state, { isAlarmSounding: false });
   },
 }, defaultModeState);
 

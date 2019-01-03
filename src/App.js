@@ -2,18 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 import Clock from './Clock.js'
-import { getTime, getAlarmTime } from './reducers'
+import { getTime, getAlarmTime, getIsAlarmSounding } from './reducers'
 import { Button, List, ListItem, ListItemText, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@material-ui/core';
 import { Alarm, WbSunny, AccessTime, Settings } from '@material-ui/icons';
 import { toggleSetAlarmMode, toggleSetTimeMode, toggleDarkMode, toggleChooseAlarmMode, selectAlarmSound } from './reducers/modules/app';
-import { getIsAlarmActive, getIsInSetTimeMode, getIsInSetAlarmMode, getShouldSoundAlarm, getIsInChooseAlarmMode, getAlarmSound } from './reducers'
+import { getIsAlarmActive, getIsInSetTimeMode, getIsInSetAlarmMode, getIsInChooseAlarmMode, getAlarmSound } from './reducers'
 import { hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement } from './reducers/modules/time'
 import { alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement } from './reducers/modules/alarm'
-import { toggleAlarmActive, setAlarmActive } from './reducers/modules/alarm'
+import { toggleAlarmActive, setAlarmActive, muteAlarm } from './reducers/modules/alarm'
 import Sound from 'react-sound';
 
 const App = ({ time,
-  alarmTime, isAlarmActive, toggleAlarmActive, setAlarmActive, shouldSoundAlarm,
+  alarmTime, isAlarmActive, toggleAlarmActive, setAlarmActive, isAlarmSounding, muteAlarm,
   toggleDarkMode,
   hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement,
   alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement,
@@ -28,7 +28,7 @@ const App = ({ time,
             Switch Alarm {isAlarmActive ? "Off" : "On"}
             <Alarm />
           </Button>
-          <Dialog open={shouldSoundAlarm}>
+          <Dialog open={isAlarmSounding}>
             <DialogTitle>{"ALARM ACTIVE!"}</DialogTitle>
             <DialogContent>
               <Sound
@@ -40,7 +40,7 @@ const App = ({ time,
             </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button color="primary" autoFocus onClick={toggleAlarmActive}>
+              <Button color="primary" autoFocus onClick={muteAlarm}>
                 Turn alarm off
             </Button>
             </DialogActions>
@@ -132,12 +132,13 @@ const mapStateToProps = state => ({
   isInSetAlarmMode: getIsInSetAlarmMode(state),
   isInChooseAlarmMode: getIsInChooseAlarmMode(state),
   alarmSound: getAlarmSound(state),
-  shouldSoundAlarm: getShouldSoundAlarm(state),
+  isAlarmSounding: getIsAlarmSounding(state),
 });
 
 const mapDispatchToProps = {
   toggleAlarmActive: toggleAlarmActive,
   setAlarmActive: setAlarmActive,
+  muteAlarm: muteAlarm,
   toggleDarkMode: toggleDarkMode,
   toggleSetTimeMode: toggleSetTimeMode,
   toggleSetAlarmMode: toggleSetAlarmMode,
