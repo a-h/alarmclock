@@ -58,6 +58,8 @@ export const getAlarmTime = state => state ?
 export const getIsAlarmSounding = state => state ? state.isAlarmSounding === true : false;
 
 // REDUCERS
+const defaultTimeState = time(0, 0, 0);
+
 const timeReducers = handleActions({
   [ALARM_HOUR_INCREMENT]: state => incrementHour(getAlarmTime(state)),
   [ALARM_HOUR_DECREMENT]: state => decrementHour(getAlarmTime(state)),
@@ -65,7 +67,7 @@ const timeReducers = handleActions({
   [ALARM_MINUTE_DECREMENT]: state => decrementMinute(getAlarmTime(state)),
   [ALARM_SECOND_INCREMENT]: state => incrementSecond(getAlarmTime(state)),
   [ALARM_SECOND_DECREMENT]: state => decrementSecond(getAlarmTime(state)),
-}, time(0, 0, 0));
+}, defaultTimeState);
 
 const defaultModeState = {
   isAlarmActive: false,
@@ -88,3 +90,8 @@ export default combineReducers({
   time: timeReducers,
   modes: modeReducers,
 });
+
+export const defaultState = {
+  time: defaultTimeState,
+  modes: defaultModeState,
+}

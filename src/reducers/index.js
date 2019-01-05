@@ -66,3 +66,9 @@ const combinedReducers = combineReducers({
 const rootReducer = reduceReducers(alarmActivationReducer, combinedReducers);
 
 export default rootReducer;
+
+export const defaultState = {
+    timer: fromTime.defaultState,
+    alarm: fromAlarm.defaultState,
+    app: fromApp.defaultState,
+};

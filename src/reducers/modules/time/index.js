@@ -39,11 +39,10 @@ export const secondDecrement = () => ({
 // SELECTORS
 export const getTime = state => time(state.hours, state.minutes, state.seconds);
 
-const startDate = new Date();
-
-const defaultState = time(startDate.getHours(), startDate.getMinutes(), startDate.getSeconds());
-
 // REDUCERS
+const startDate = new Date();
+const defaultTimeState = time(startDate.getHours(), startDate.getMinutes(), startDate.getSeconds());
+
 const timeReducers = handleActions({
   [SECOND_ELAPSED]: state => addSecond(getTime(state)),
   [HOUR_INCREMENT]: state => incrementHour(getTime(state)),
@@ -52,8 +51,12 @@ const timeReducers = handleActions({
   [MINUTE_DECREMENT]: state => decrementMinute(getTime(state)),
   [SECOND_INCREMENT]: state => incrementSecond(getTime(state)),
   [SECOND_DECREMENT]: state => decrementSecond(getTime(state)),
-}, defaultState);
+}, defaultTimeState);
 
 export default combineReducers({
   time: timeReducers,
 });
+
+export const defaultState = {
+  time: defaultTimeState,
+};

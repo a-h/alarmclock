@@ -8,12 +8,12 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Timer from './components/timer';
 import { Provider } from 'react-redux';
-import rootReducer from './reducers'
+import { rootReducer, defaultState } from './reducers'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(rootReducer, composeEnhancers(
+const store = createStore(rootReducer, defaultState, composeEnhancers(
   applyMiddleware(thunk)))
 
 const lightTheme = createMuiTheme({

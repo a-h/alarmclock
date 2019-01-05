@@ -11,8 +11,8 @@ export const addSecond = ({ hours, minutes, seconds }) => {
   if(minutes < 59) {
     return time(hours, minutes + 1, 0);
   }
-  if(hours < 24) {
-    return time(hours + 1, 0, seconds);
+  if(hours < 23) {
+    return time(hours + 1, 0, 0);
   }
   return time(0, 0, 0);
 };

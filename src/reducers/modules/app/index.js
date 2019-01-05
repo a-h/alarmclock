@@ -38,21 +38,25 @@ export const getIsInSetTimeMode = state => state ? state.isInSetTimeMode === tru
 export const getIsInChooseAlarmMode = state => state ? state.isInChooseAlarmMode === true : false;
 export const getAlarmSound = state => (state && state.alarmSound) ? state.alarmSound : 'alarm1.mp3';
 
-const defaultState = {
+const defaultModesState = {
   isInSetAlarmMode: false,
   isInSetTimeMode: false,
   alarmSound: 'alarm1.mp3',
 };
 
 // REDUCERS
-const modeReducers = handleActions({
+const modesReducers = handleActions({
   [TOGGLE_SET_ALARM_MODE]: state => Object.assign({}, state, { isInSetAlarmMode: !state.isInSetAlarmMode }),
   [TOGGLE_SET_TIME_MODE]: state => Object.assign({}, state, { isInSetTimeMode: !state.isInSetTimeMode }),
   [TOGGLE_DARK_MODE]: state => Object.assign({}, state, { isInDarkMode: !state.isInDarkMode }),
   [TOGGLE_CHOOSE_ALARM_MODE]: state => Object.assign({}, state, { isInChooseAlarmMode: !state.isInChooseAlarmMode }),
   [SELECT_ALARM_SOUND]: (state, action) => Object.assign({}, state, { alarmSound: action.payload.mp3 }),
-}, defaultState);
+}, defaultModesState);
 
 export default combineReducers({
-  modes: modeReducers,
+  modes: modesReducers,
 });
+
+export const defaultState = {
+  modes: defaultModesState,
+};
