@@ -6,9 +6,9 @@ import thunk from 'redux-thunk';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Timer from './components/timer';
+import { secondElapsed } from './components/timer';
 import { Provider } from 'react-redux';
-import { rootReducer, defaultState } from './reducers'
+import { default as rootReducer, defaultState } from './reducers'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -44,7 +44,6 @@ const getTheme = darkMode => {
 const Root = ({ isInDarkMode }) => (
   <MuiThemeProvider theme={getTheme(isInDarkMode)}>
     <CssBaseline />
-    <Timer />
     <App />
   </MuiThemeProvider>
 );
@@ -61,6 +60,8 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+setInterval(() => store.dispatch(secondElapsed()), 1000);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
