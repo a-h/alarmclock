@@ -26,35 +26,35 @@ const Clock = ({ hours, minutes, seconds,
   secondIncrement, secondDecrement,
   isInSetTimeMode }) => (
     <Paper style={{ padding: '10px' }}>
-      <Grid container spacing={16} justify="center" alignItems="center" direction="row">
+      <Grid container spacing={12} justify="center" alignItems="center" direction="row">
         <Grid item>
-          <Grid container spacing={16} justify="center" alignItems="center" direction="column">
+          <Grid container spacing={12} justify="center" alignItems="center" direction="column">
             <UpArrowButton onClick={hourIncrement} disabled={!isInSetTimeMode} />
-            <Typography variant="h3">
+            <Typography variant="h4">
               {twoDigits(hours)}
             </Typography>
             <DownArrowButton onClick={hourDecrement} disabled={!isInSetTimeMode} />
           </Grid>
         </Grid>
         <Grid item>
-          <Typography variant="h3">:</Typography>
+          <Typography variant="h4">:</Typography>
         </Grid>
         <Grid item>
-          <Grid container spacing={16} justify="center" alignItems="center" direction="column">
+          <Grid container spacing={12} justify="center" alignItems="center" direction="column">
             <UpArrowButton onClick={minuteIncrement} disabled={!isInSetTimeMode} />
-            <Typography variant="h3">
+            <Typography variant="h4">
               {twoDigits(minutes)}
             </Typography>
             <DownArrowButton onClick={minuteDecrement} disabled={!isInSetTimeMode} />
           </Grid>
         </Grid>
         <Grid item>
-          <Typography variant="h3">:</Typography>
+          <Typography variant="h4">:</Typography>
         </Grid>
         <Grid item>
-          <Grid container spacing={16} justify="center" alignItems="center" direction="column">
+          <Grid container spacing={12} justify="center" alignItems="center" direction="column">
             <UpArrowButton onClick={secondIncrement} disabled={!isInSetTimeMode} />
-            <Typography variant="h3">
+            <Typography variant="h4">
               {twoDigits(seconds)}
             </Typography>
             <DownArrowButton onClick={secondDecrement} disabled={!isInSetTimeMode} />

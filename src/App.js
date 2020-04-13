@@ -5,8 +5,8 @@ import Clock from './Clock.js'
 import { getTime, getAlarmTime, getIsAlarmSounding } from './reducers'
 import { Button, List, ListItem, ListItemText, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Grid } from '@material-ui/core';
 import { Alarm, WbSunny, AccessTime, Settings } from '@material-ui/icons';
-import { toggleSetAlarmMode, toggleSetTimeMode, toggleDarkMode, toggleChooseAlarmMode, selectAlarmSound } from './reducers/modules/app';
-import { getIsAlarmActive, getIsInSetTimeMode, getIsInSetAlarmMode, getIsInChooseAlarmMode, getAlarmSound } from './reducers'
+import { toggleSetAlarmMode, toggleSetTimeMode, toggleDarkMode, toggleChooseAlarmMode, useAlarmSound, toggleTestSound, stopTestSound } from './reducers/modules/app';
+import { getIsAlarmActive, getIsInSetTimeMode, getIsInSetAlarmMode, getIsInChooseAlarmMode, getAlarmSound, getIsTestSoundPlaying } from './reducers'
 import { hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement } from './reducers/modules/time'
 import { alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement } from './reducers/modules/alarm'
 import { toggleAlarmActive, setAlarmActive, muteAlarm } from './reducers/modules/alarm'
@@ -17,7 +17,7 @@ const App = ({ time,
   toggleDarkMode,
   hourIncrement, hourDecrement, minuteIncrement, minuteDecrement, secondIncrement, secondDecrement,
   alarmHourIncrement, alarmHourDecrement, alarmMinuteIncrement, alarmMinuteDecrement, alarmSecondIncrement, alarmSecondDecrement,
-  toggleChooseAlarmMode, isInChooseAlarmMode, selectAlarmSound, alarmSound,
+  toggleChooseAlarmMode, isInChooseAlarmMode, useAlarmSound, alarmSound, toggleTestSound, stopTestSound, isTestSoundPlaying,
   isInSetAlarmMode, toggleSetAlarmMode,
   isInSetTimeMode, toggleSetTimeMode,
 }) => (
@@ -100,19 +100,29 @@ const App = ({ time,
         <Dialog aria-labelledby="simple-dialog-title" open={isInChooseAlarmMode} onClose={toggleChooseAlarmMode}>
           <DialogTitle id="simple-dialog-title">Choose audio</DialogTitle>
           <List>
-            <ListItem button onClick={() => { selectAlarmSound('alarm1.mp3'); toggleChooseAlarmMode(); }}>
+            <ListItem button selected={alarmSound === 'alarm1.mp3'} onClick={() => { useAlarmSound('alarm1.mp3'); }}>
               <ListItemText>Alarm 1</ListItemText>
             </ListItem>
-            <ListItem button onClick={() => { selectAlarmSound('alarm2.mp3'); toggleChooseAlarmMode(); }}>
+            <ListItem button selected={alarmSound === 'alarm2.mp3'} onClick={() => { useAlarmSound('alarm2.mp3'); }}>
               <ListItemText>Alarm 2</ListItemText>
             </ListItem>
-            <ListItem button onClick={() => { selectAlarmSound('alarm3.mp3'); toggleChooseAlarmMode(); }}>
+            <ListItem button selected={alarmSound === 'alarm3.mp3'} onClick={() => { useAlarmSound('alarm3.mp3'); }}>
               <ListItemText>Alarm 3</ListItemText>
             </ListItem>
-            <ListItem button onClick={() => { selectAlarmSound('alarm4.mp3'); toggleChooseAlarmMode(); }}>
+            <ListItem button selected={alarmSound === 'alarm4.mp3'} onClick={() => { useAlarmSound('alarm4.mp3'); }}>
               <ListItemText>Alarm 4</ListItemText>
             </ListItem>
           </List>
+          <Button variant="contained" color="secondary" onClick={toggleTestSound}>{ isTestSoundPlaying ? <React.Fragment>Stop Test</React.Fragment> : <React.Fragment>Test Sound</React.Fragment> }</Button>
+          { isTestSoundPlaying && 
+              <Sound
+                url={alarmSound}
+                playStatus={Sound.status.PLAYING}
+              />
+          }
+          <Button variant="contained" color="primary" onClick={() => { stopTestSound(); toggleChooseAlarmMode() }}>
+            OK
+          </Button>
         </Dialog>
         <Grid item>
           <Button variant="contained" color="default" onClick={toggleSetTimeMode}>
@@ -133,6 +143,7 @@ const mapStateToProps = state => ({
   isInChooseAlarmMode: getIsInChooseAlarmMode(state),
   alarmSound: getAlarmSound(state),
   isAlarmSounding: getIsAlarmSounding(state),
+  isTestSoundPlaying: getIsTestSoundPlaying(state),
 });
 
 const mapDispatchToProps = {
@@ -141,9 +152,11 @@ const mapDispatchToProps = {
   muteAlarm: muteAlarm,
   toggleDarkMode: toggleDarkMode,
   toggleSetTimeMode: toggleSetTimeMode,
+  toggleTestSound: toggleTestSound,
+  stopTestSound: stopTestSound,
   toggleSetAlarmMode: toggleSetAlarmMode,
   toggleChooseAlarmMode: toggleChooseAlarmMode,
-  selectAlarmSound: selectAlarmSound,
+  useAlarmSound: useAlarmSound,
   hourIncrement: hourIncrement,
   hourDecrement: hourDecrement,
   minuteIncrement: minuteIncrement,

@@ -28,6 +28,9 @@ export const getIsAlarmActive = state =>
 export const getIsAlarmSounding = state =>
     fromAlarm.getIsAlarmSounding(state.alarm.modes);
 
+export const getIsTestSoundPlaying = state =>
+    fromApp.getIsTestSoundPlaying(state.app.modes);
+
 const alarmActivationReducer = (state, action) => {
     if (action.type !== SECOND_ELAPSED) {
         return state;
